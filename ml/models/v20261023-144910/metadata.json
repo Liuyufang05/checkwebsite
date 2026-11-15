@@ -1,0 +1,192 @@
+{
+  "version": "v20261023-144910",
+  "created_utc": "2026-10-23T14:49:11.337807+00:00",
+  "feature_schema_version": "2.0",
+  "lists_fingerprint": "66729828edfacd23",
+  "libraries": {
+    "python": "3.13.17",
+    "scikit-learn": "1.5.2",
+    "xgboost": "2.1.3",
+    "lightgbm": "4.5.0",
+    "numpy": "2.1.3",
+    "shap": "0.46.0"
+  },
+  "models": {
+    "uci": {
+      "best": "Random Forest",
+      "role": "comparison",
+      "features": [
+        "having_IP_Address",
+        "URL_Length",
+        "Shortining_Service",
+        "having_At_Symbol",
+        "double_slash_redirecting",
+        "Prefix_Suffix",
+        "having_Sub_Domain",
+        "SSLfinal_State",
+        "Domain_registeration_length",
+        "Favicon",
+        "port",
+        "HTTPS_token",
+        "Request_URL",
+        "URL_of_Anchor",
+        "Links_in_tags",
+        "SFH",
+        "Submitting_to_email",
+        "Abnormal_URL",
+        "Redirect",
+        "on_mouseover",
+        "RightClick",
+        "popUpWidnow",
+        "Iframe",
+        "age_of_domain",
+        "DNSRecord",
+        "web_traffic",
+        "Page_Rank",
+        "Google_Index",
+        "Links_pointing_to_page",
+        "Statistical_report"
+      ],
+      "test": {
+        "accuracy": 0.97603,
+        "precision": 0.98031,
+        "recall": 0.96531,
+        "f1": 0.97275,
+        "roc_auc": 0.99749,
+        "pr_auc": 0.99714,
+        "confusion_matrix": [
+          [
+            1212,
+            19
+          ],
+          [
+            34,
+            946
+          ]
+        ]
+      }
+    },
+    "content": {
+      "best": "XGBoost",
+      "role": "live",
+      "features": [
+        "LineOfCode",
+        "LargestLineLength",
+        "HasTitle",
+        "HasFavicon",
+        "Robots",
+        "IsResponsive",
+        "HasDescription",
+        "NoOfPopup",
+        "NoOfiFrame",
+        "HasExternalFormSubmit",
+        "HasSocialNet",
+        "HasSubmitButton",
+        "HasHiddenFields",
+        "HasPasswordField",
+        "Bank",
+        "Pay",
+        "Crypto",
+        "HasCopyrightInfo",
+        "NoOfImage",
+        "NoOfCSS",
+        "NoOfJS",
+        "NoOfSelfRef",
+        "NoOfEmptyRef",
+        "NoOfExternalRef"
+      ],
+      "test": {
+        "accuracy": 0.99609,
+        "precision": 0.99721,
+        "recall": 0.99478,
+        "f1": 0.996,
+        "roc_auc": 0.99989,
+        "pr_auc": 0.99989,
+        "confusion_matrix": [
+          [
+            6000,
+            16
+          ],
+          [
+            30,
+            5722
+          ]
+        ]
+      }
+    },
+    "url": {
+      "best": "Stacking Ensemble",
+      "role": "live",
+      "features": [
+        "url_length",
+        "host_length",
+        "path_length",
+        "query_length",
+        "num_path_segments",
+        "max_path_segment_length",
+        "num_subdomains",
+        "sld_length",
+        "tld_length",
+        "is_ip_host",
+        "has_port",
+        "has_at_symbol",
+        "num_dots_host",
+        "num_hyphens_host",
+        "num_hyphens_url",
+        "num_underscores",
+        "num_slashes",
+        "has_double_slash_in_path",
+        "num_equals",
+        "num_question",
+        "num_ampersand",
+        "num_percent",
+        "num_tilde",
+        "num_digits_url",
+        "digit_ratio_url",
+        "num_digits_host",
+        "letter_ratio_url",
+        "host_entropy",
+        "url_entropy",
+        "longest_token_length",
+        "num_host_tokens",
+        "has_punycode",
+        "sensitive_word_count",
+        "brand_outside_domain",
+        "brand_in_domain_not_exact",
+        "is_shortener",
+        "is_free_hosting",
+        "suspicious_tld",
+        "has_file_extension",
+        "has_php",
+        "http_token_in_url",
+        "embedded_url",
+        "max_char_repeat",
+        "num_hex_runs"
+      ],
+      "test": {
+        "accuracy": 0.85516,
+        "precision": 0.84811,
+        "recall": 0.86241,
+        "f1": 0.8552,
+        "roc_auc": 0.92089,
+        "pr_auc": 0.92654,
+        "confusion_matrix": [
+          [
+            7667,
+            1374
+          ],
+          [
+            1224,
+            7672
+          ]
+        ]
+      }
+    }
+  },
+  "sha256": {
+    "uci_model.joblib": "4cf6aafc4ee1b2f990f8020122eabfd40a6557c5a0a22c3656c7fc41e6ccaeae",
+    "content_model.joblib": "e7c0d957a510189711279f88ebb41d1150f9cd2d7a2327d16fb65e5df1f127eb",
+    "url_model.joblib": "7e3a8ae7af815a0b9ab4010ceb881f29b2f159ae1d02a4abde37d432e01a44d1"
+  },
+  "fast_mode": false
+}

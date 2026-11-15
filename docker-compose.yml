@@ -1,0 +1,75 @@
+# PhishGuard - production-style stack.
+#   docker compose up --build
+# Frontend: http://localhost:8080   API docs: http://localhost:8080/api/docs
+name: phishing-detector
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend.Dockerfile
+    image: phishguard-backend:latest
+    env_file:
+      - path: ./backend/.env
+        required: false
+    environment:
+      MODELS_DIR: /models
+      REPORTS_DIR: /reports
+      DATA_DIR: /app/data
+      TRUST_PROXY_HEADERS: "true"
+      CORS_ORIGINS: http://localhost:8080
+    volumes:
+      - ./ml/models:/models:ro          # versioned model bundles
+      - ./ml/reports:/reports:ro        # comparison results + figures
+      - backend-data:/app/data          # SQLite history + screenshots
+    read_only: true
+    tmpfs:
+      - /tmp:size=256m
+    shm_size: "512m"
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 2g
+    pids_limit: 512
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=4)"]
+      interval: 30s
+      timeout: 5s
+      start_period: 40s
+      retries: 3
+    expose:
+      - "8000"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend.Dockerfile
+    image: phishguard-frontend:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      backend:
+        condition: service_healthy
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+
+  # Optional: retrain inside Docker -> docker compose --profile train run --rm trainer
+  trainer:
+    profiles: ["train"]
+    build:
+      context: .
+      dockerfile: docker/ml.Dockerfile
+    volumes:
+      - ./ml:/work/ml
+      - ./backend:/work/backend
+    environment:
+      PG_JOBS: "-1"
+
+volumes:
+  backend-data:

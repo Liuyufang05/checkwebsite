@@ -1,0 +1,60 @@
+# --- secrets (never commit) ---
+.env
+*.env
+!.env.example
+!backend/.env.example
+
+# --- python ---
+__pycache__/
+*.py[cod]
+.venv/
+env/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# --- node ---
+node_modules/
+frontend/dist/
+dist/
+build/
+out/
+.vite/
+coverage/
+npm-debug.log*
+yarn-error.log*
+
+# --- data (re-download with scripts/train.*) ---
+ml/data/raw/*
+!ml/data/raw/.gitkeep
+ml/data/processed/
+
+# --- runtime state ---
+backend/data/
+*.sqlite3
+*.sqlite3-*
+
+# --- OS / editors ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+ehthumbs.db
+desktop.ini
+
+# --- logs / temp / backups ---
+*.log
+logs/
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+.cache/

@@ -1,0 +1,47 @@
+# Hot-reload development stack.
+#   docker compose -f docker-compose.dev.yml up --build
+# Vite: http://localhost:5173 (proxies /api to the backend)   API: http://localhost:8000/api/docs
+name: phishing-detector-dev
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend.Dockerfile
+    env_file:
+      - path: ./backend/.env
+        required: false
+    environment:
+      MODELS_DIR: /models
+      REPORTS_DIR: /reports
+      DATA_DIR: /app/data
+      WATCHFILES_FORCE_POLLING: "true"   # reliable reloads on Windows bind mounts
+      CORS_ORIGINS: http://localhost:5173
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload", "--reload-dir", "/app/app"]
+    volumes:
+      - ./backend/app:/app/app
+      - ./ml/models:/models:ro
+      - ./ml/reports:/reports:ro
+      - backend-dev-data:/app/data
+    ports:
+      - "8000:8000"
+    shm_size: "512m"
+
+  frontend:
+    image: node:20-alpine
+    working_dir: /app
+    command: sh -c "npm ci --no-audit --no-fund && npm run dev -- --host 0.0.0.0"
+    environment:
+      VITE_API_PROXY: http://backend:8000
+      CHOKIDAR_USEPOLLING: "true"
+    volumes:
+      - ./frontend:/app
+      - frontend-node-modules:/app/node_modules
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+volumes:
+  backend-dev-data:
+  frontend-node-modules:

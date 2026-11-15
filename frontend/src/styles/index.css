@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------- tokens */
+:root,
+[data-theme="dark"] {
+  --abyss: 4 18 31;      /* #04121F  deep-water base   */
+  --trench: 10 34 56;    /* #0A2238  raised surfaces   */
+  --reef: 22 58 86;      /* #163A56  hairlines         */
+  --foam: 232 244 242;   /* #E8F4F2  primary text      */
+  --mist: 143 170 182;   /* #8FAAB6  secondary text    */
+  --biolume: 79 240 210; /* #4FF0D2  safe / sonar      */
+  --lure: 255 106 61;    /* #FF6A3D  phishing / villain */
+  --kelp: 255 201 74;    /* #FFC94A  suspicious        */
+  --glow: 0.55;
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --abyss: 234 243 241;
+  --trench: 255 255 255;
+  --reef: 196 216 220;
+  --foam: 6 32 51;
+  --mist: 74 101 116;
+  --biolume: 8 138 120;
+  --lure: 214 72 28;
+  --kelp: 166 116 0;
+  --glow: 0.22;
+  color-scheme: light;
+}
+
+/* ---------------------------------------------------------------- base */
+@layer base {
+  html {
+    @apply bg-abyss text-foam antialiased;
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    text-rendering: optimizeLegibility;
+  }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  .lenis.lenis-stopped { overflow: hidden; }
+  body { min-height: 100vh; overflow-x: hidden; }
+  ::selection { background: rgb(var(--biolume) / 0.35); color: rgb(var(--foam)); }
+  :focus-visible { outline: 2px solid rgb(var(--biolume)); outline-offset: 3px; border-radius: 6px; }
+  h1, h2, h3 { font-family: "Bricolage Grotesque Variable", system-ui, sans-serif; font-variation-settings: "opsz" 96; }
+  img { max-width: 100%; }
+}
+
+@layer components {
+  .shell { @apply mx-auto w-full max-w-[1320px] px-5 sm:px-8 lg:px-12; }
+  .panel {
+    @apply rounded-[28px] border border-reef/70 bg-trench/60 backdrop-blur-md;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-reef/80 px-3 py-1 text-xs text-mist;
+  }
+  .lede { @apply max-w-[62ch] text-lg leading-relaxed text-mist; }
+  .data { font-family: "IBM Plex Mono", ui-monospace, monospace; font-feature-settings: "zero" 1; }
+  .glow-biolume { box-shadow: 0 0 0 1px rgb(var(--biolume) / 0.35), 0 0 48px -6px rgb(var(--biolume) / var(--glow)); }
+  .glow-lure { box-shadow: 0 0 0 1px rgb(var(--lure) / 0.4), 0 0 48px -6px rgb(var(--lure) / var(--glow)); }
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgb(var(--foam) / 0.18);
+  }
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full bg-biolume px-6 py-3.5 font-semibold text-abyss transition-colors;
+  }
+  .btn-primary:hover { background: rgb(var(--foam)); }
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 rounded-full border border-reef px-5 py-3 text-foam transition-colors hover:border-biolume hover:text-biolume;
+  }
+}
+
+/* water-caustics noise overlay (generated, no image request) */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* animated depth gradient behind the hero */
+.depth-gradient {
+  background:
+    radial-gradient(60% 50% at 70% 20%, rgb(var(--biolume) / 0.16), transparent 70%),
+    radial-gradient(50% 45% at 15% 80%, rgb(var(--lure) / 0.12), transparent 70%),
+    linear-gradient(180deg, rgb(var(--trench)) 0%, rgb(var(--abyss)) 70%);
+  background-size: 140% 140%, 140% 140%, 100% 100%;
+  animation: drift 18s ease-in-out infinite alternate;
+}
+@keyframes drift {
+  from { background-position: 0% 0%, 100% 100%, 0 0; }
+  to { background-position: 100% 60%, 0% 40%, 0 0; }
+}
+
+/* custom cursor hides the native one only on fine pointers */
+@media (pointer: fine) {
+  html.has-cursor, html.has-cursor * { cursor: none !important; }
+}
+
+/* split-text reveal helper */
+.line-mask { display: inline-block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+.line-mask > span { display: inline-block; will-change: transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  .depth-gradient { animation: none; }
+}
+
+/* scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: rgb(var(--reef)); border-radius: 999px; border: 2px solid rgb(var(--abyss)); }
+::-webkit-scrollbar-track { background: transparent; }
