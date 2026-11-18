@@ -20,8 +20,9 @@ STATIC_DIR = Path(__file__).resolve().parents[1] / "data"
 
 
 class ModelRegistry:
-    def __init__(self, models_dir: Path):
+    def __init__(self, models_dir: Path, explanations_enabled: bool = True):
         self.models_dir = Path(models_dir)
+        self.explanations_enabled = explanations_enabled
         self.version: str | None = None
         self.bundles: dict[str, dict] = {}
         self.metadata: dict = {}
@@ -97,6 +98,8 @@ class ModelRegistry:
 
     def warmup(self) -> None:
         """Build explainers once at start-up so the first scan isn't slowed by SHAP initialisation."""
+        if not self.explanations_enabled:
+            return
         for key, b in self.bundles.items():
             try:
                 row = np.asarray(b["background"])[0]
@@ -105,6 +108,8 @@ class ModelRegistry:
                 log.warning("warm-up failed for %s: %s", key, exc)
 
     def explain(self, key: str, features: dict[str, float], top: int = 8) -> list[dict]:
+        if not self.explanations_enabled:
+            return []
         b = self.bundles[key]
         names = b["features"]
         x = np.array([[features[f] for f in names]], dtype=float)

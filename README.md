@@ -42,13 +42,14 @@
 11. [Huấn luyện lại mô hình](#huan-luyen-lai-mo-hinh)
 12. [API](#api)
 13. [Biến môi trường](#bien-moi-truong)
-14. [Mô hình bảo mật](#mo-hinh-bao-mat)
-15. [Cấu trúc dự án](#cau-truc-du-an)
-16. [Đẩy lên GitHub](#day-len-github)
-17. [Hạn chế và đạo đức](#han-che-va-dao-duc)
-18. [Hướng phát triển](#huong-phat-trien)
-19. [Tài liệu tham khảo](#tai-lieu-tham-khao)
-20. [Ghi công và giấy phép](#ghi-cong-va-giay-phep)
+14. [Triển khai Cloudflare Pages và Render](#trien-khai-cloudflare-pages-va-render)
+15. [Mô hình bảo mật](#mo-hinh-bao-mat)
+16. [Cấu trúc dự án](#cau-truc-du-an)
+17. [Đẩy lên GitHub](#day-len-github)
+18. [Hạn chế và đạo đức](#han-che-va-dao-duc)
+19. [Hướng phát triển](#huong-phat-trien)
+20. [Tài liệu tham khảo](#tai-lieu-tham-khao)
+21. [Ghi công và giấy phép](#ghi-cong-va-giay-phep)
 
 ---
 
@@ -408,6 +409,7 @@ Sao chép `.env.example` thành **`backend/.env`**. Mỗi khóa đều tùy ch�
 | `RATE_LIMIT_PER_MINUTE` | `10` | Số lượt quét trên mỗi IP client mỗi phút |
 | `CACHE_TTL_S` | `900` | Tái sử dụng kết quả quét cho cùng URL |
 | `SCREENSHOT_ENABLED` | `true` | Tắt ảnh chụp Playwright |
+| `EXPLANATIONS_ENABLED` | `true` | Tắt phần giải thích dự đoán bằng SHAP |
 | `TOTAL_SCAN_BUDGET_S` | `40` | Ngân sách thời gian cứng cho một lần quét |
 | `MAX_RESPONSE_BYTES` | `3000000` | Giới hạn tải mỗi trang |
 | `MAX_REDIRECTS` | `5` | Giới hạn số bước chuyển hướng |
@@ -416,6 +418,29 @@ Sao chép `.env.example` thành **`backend/.env`**. Mỗi khóa đều tùy ch�
 | `TRUST_PROXY_HEADERS` | `false` | Tin `X-Real-IP` (bật phía sau nginx đi kèm) |
 
 `backend/.env` nằm trong `.gitignore`, và các script đẩy mã từ chối commit mọi tệp `.env`.
+
+## Triển khai Cloudflare Pages và Render
+
+Frontend đang được phân phối tại [checkwebsite.pages.dev](https://checkwebsite.pages.dev). Cấu hình Blueprint
+[`render.yaml`](./render.yaml) tạo backend Render Free mới tên `phishguard-checkwebsite-api`; không dùng chung
+với các dịch vụ khác trong workspace.
+
+1. Đẩy `render.yaml` và mã backend lên nhánh `main` của GitHub.
+2. Trong Render, chọn **New > Blueprint**, kết nối repository `Liuyufang05/checkwebsite` ở nhánh `main`,
+   kiểm tra cấu hình rồi chọn **Deploy Blueprint**.
+3. Sau khi backend hoạt động, đặt `VITE_API_BASE` thành hostname `onrender.com` do Render cấp, dựng lại frontend
+   và triển khai thư mục `frontend/dist` lên Pages:
+
+   ```powershell
+   $env:VITE_API_BASE = "https://<hostname-backend>.onrender.com"
+   npm --prefix frontend run build
+   npx wrangler pages deploy frontend/dist --project-name=checkwebsite --branch=main
+   ```
+
+Bản cấu hình miễn phí tắt ảnh chụp Chromium và giải thích SHAP để giảm mức dùng bộ nhớ. Dịch vụ có thể ngủ sau
+15 phút không có yêu cầu, khởi động lại chậm và xóa lịch sử SQLite khi ngủ, khởi động lại hoặc triển khai lại;
+không có ổ đĩa bền vững. Chỉ thêm khóa API tùy chọn trong phần **Environment** của Render nếu cần, không đưa
+khóa bí mật vào GitHub hoặc frontend.
 
 ## Mô hình bảo mật
 

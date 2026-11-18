@@ -6,8 +6,6 @@
 **/venv
 .git
 ml/data
-ml/models
-ml/reports
 backend/data
 backend/.env
 **/*.ipynb_checkpoints

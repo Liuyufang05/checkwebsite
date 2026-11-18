@@ -136,3 +136,13 @@ def test_model_not_ready(tmp_path, resolver):
         assert c.get("/api/health").json()["status"] == "degraded"
         r = c.post("/api/scan", json={"url": "https://example.com/"})
         assert r.status_code == 503 and r.json()["code"] == "model_not_ready"
+
+
+def test_model_explanations_can_be_disabled(model_dir):
+    registry = ModelRegistry(model_dir, explanations_enabled=False)
+    registry.load()
+    registry.warmup()
+
+    features = {name: 0.0 for name in registry.bundles["url"]["features"]}
+    assert registry.explain("url", features) == []
+    assert registry._explainers == {}

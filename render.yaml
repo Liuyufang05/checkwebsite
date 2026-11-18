@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: phishguard-checkwebsite-api
+    runtime: docker
+    plan: free
+    region: oregon
+    branch: main
+    dockerfilePath: ./docker/render-free.Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: MODELS_DIR
+        value: /models
+      - key: REPORTS_DIR
+        value: /reports
+      - key: DATA_DIR
+        value: /tmp/phishguard-data
+      - key: CORS_ORIGINS
+        value: https://checkwebsite.pages.dev
+      - key: TRUST_PROXY_HEADERS
+        value: "true"
+      - key: SCREENSHOT_ENABLED
+        value: "false"
+      - key: EXPLANATIONS_ENABLED
+        value: "false"
+      - key: RATE_LIMIT_PER_MINUTE
+        value: "5"
+      - key: OMP_NUM_THREADS
+        value: "1"
+      - key: OPENBLAS_NUM_THREADS
+        value: "1"

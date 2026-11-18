@@ -30,6 +30,7 @@ class Settings(BaseSettings):
     max_redirects: int = 5
     max_response_bytes: int = 3_000_000
     screenshot_enabled: bool = True
+    explanations_enabled: bool = True
     screenshot_timeout_s: float = 15.0
     browser_sandbox: bool = False  # set true if the host kernel allows Chromium's sandbox in the container
     whois_timeout_s: float = 6.0

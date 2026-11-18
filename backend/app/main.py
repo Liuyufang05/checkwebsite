@@ -48,7 +48,7 @@ def create_app(settings: Settings | None = None, scanner: Scanner | None = None)
     @asynccontextmanager
     async def lifespan(app: FastAPI):
         if scanner is None:
-            registry = ModelRegistry(settings.models_dir)
+            registry = ModelRegistry(settings.models_dir, explanations_enabled=settings.explanations_enabled)
             registry.load()
             history = History(settings.data_dir / "history.sqlite3")
             browser = Browser(settings)
