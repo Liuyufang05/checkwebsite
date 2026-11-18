@@ -31,6 +31,9 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     }
     throw new ApiError(detail, res.status, code);
   }
+  if (!res.headers.get("content-type")?.includes("application/json")) {
+    throw new ApiError("Backend chưa được kết nối. Tính năng quét hiện chưa khả dụng.", 503, "api_unavailable");
+  }
   return res.json() as Promise<T>;
 }
 
