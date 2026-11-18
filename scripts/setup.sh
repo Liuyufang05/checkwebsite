@@ -2,7 +2,10 @@
 # One-time local setup (macOS/Linux): venv, Playwright Chromium, frontend packages, .env
 set -euo pipefail
 cd "$(dirname "$0")/.."
-python3 -m venv .venv
+# Pin the venv to a Python that has wheels for the pinned ML libs (3.12; 3.14 has none yet).
+PY=python3.12
+command -v "$PY" >/dev/null || PY=python3
+"$PY" -m venv .venv
 .venv/bin/pip install --upgrade pip
 .venv/bin/pip install -r backend/requirements-dev.txt -r ml/requirements.txt
 .venv/bin/python -m playwright install chromium

@@ -107,19 +107,19 @@ export default function Hero() {
           </a>
           <p className="flex items-center gap-2 text-sm text-mist" aria-live="polite">
             <span className={`h-2 w-2 rounded-full ${health === "offline" ? "bg-lure" : health && health.status === "ok" ? "bg-biolume" : "bg-kelp"}`} />
-            <span className="sr-only sm:not-sr-only">{health === null ? "Connecting to scanner" : health === "offline" ? "Scanner offline, showing saved results" : health.status === "ok" ? "Scanner online" : "Scanner needs trained models"}</span>
+            <span className="sr-only sm:not-sr-only">{health === null ? "Đang kết nối bộ quét" : health === "offline" ? "Bộ quét ngoại tuyến, đang hiển thị kết quả đã lưu" : health.status === "ok" ? "Bộ quét trực tuyến" : "Bộ quét cần mô hình đã huấn luyện"}</span>
           </p>
         </header>
 
         <div className="relative mt-auto pt-16">
           <motion.div style={reduce ? undefined : { y: textY }} className="max-w-[880px]">
             <h1 ref={title} className="font-display text-display-xl font-extrabold">
-              <span className="block">{"Check the bait".split(" ").map((w, i) => <span key={i} className="line-mask"><span data-word className="inline-block">{w}&nbsp;</span></span>)}</span>
-              <span className="block text-biolume">{"before you bite.".split(" ").map((w, i) => <span key={i} className="line-mask"><span data-word className="inline-block">{w}&nbsp;</span></span>)}</span>
+              <span className="block">{"Đừng vội.".split(" ").map((w, i) => <span key={i} className="line-mask"><span data-word className="inline-block">{w}&nbsp;</span></span>)}</span>
+              <span className="block text-biolume">{"Hãy kiểm tra liên kết.".split(" ").map((w, i) => <span key={i} className="line-mask"><span data-word className="inline-block">{w}&nbsp;</span></span>)}</span>
             </h1>
             <p className="lede mt-7" data-hero-fade>
-              Got a link you're not sure about? Paste it here. We open it safely, look for the tricks scammers use,
-              and tell you in plain words whether it's a trap.
+              Bạn có một liên kết chưa chắc chắn? Dán tại đây. Chúng tôi mở nó an toàn, tìm dấu hiệu lừa đảo
+              và giải thích rõ ràng liên kết có phải là bẫy hay không.
             </p>
             <div className="relative mt-9 max-w-[720px]" data-hero-fade>
               <span ref={hookAnchor} className="absolute right-[22%] top-0 h-px w-px" aria-hidden="true" />

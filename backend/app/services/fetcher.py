@@ -171,7 +171,7 @@ class SafeFetcher:
                             continue
                     break
                 else:
-                    res.error = f"Too many redirects (>{self.s.max_redirects})."
+                    res.error = f"Quá nhiều chuyển hướng (>{self.s.max_redirects})."
         except UnsafeURLError as exc:
             res.error = str(exc)
             res.blocked = True

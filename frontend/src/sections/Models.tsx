@@ -7,14 +7,14 @@ import Curves, { SERIES } from "../components/charts/Curves";
 
 type Metric = "f1" | "accuracy" | "precision" | "recall" | "roc_auc" | "pr_auc";
 const METRICS: { key: Metric; label: string }[] = [
-  { key: "f1", label: "F1" }, { key: "accuracy", label: "Accuracy" }, { key: "precision", label: "Precision" },
-  { key: "recall", label: "Recall" }, { key: "roc_auc", label: "ROC-AUC" }, { key: "pr_auc", label: "PR-AUC" },
+  { key: "f1", label: "F1" }, { key: "accuracy", label: "Độ chính xác" }, { key: "precision", label: "Độ chuẩn xác" },
+  { key: "recall", label: "Độ nhạy" }, { key: "roc_auc", label: "ROC-AUC" }, { key: "pr_auc", label: "PR-AUC" },
 ];
 const ORDER: ("url" | "content" | "uci")[] = ["url", "content", "uci"];
 const INTRO: Record<string, string> = {
-  url: "Trained on 80,000 URLs from two sources, split so that no website appears in both training and test data. This is the model that judges the link you paste.",
-  content: "Trained on 60,000 pages from PhiUSIIL using only HTML features we can recompute from a live page. It runs when the page can be downloaded.",
-  uci: "The classic UCI benchmark with 30 hand-engineered features. Several depend on services that no longer exist (Alexa rank, PageRank), so it is compared here but never used live.",
+  url: "Huấn luyện trên 80.000 URL từ hai nguồn, được chia sao cho website không xuất hiện đồng thời trong dữ liệu huấn luyện và thử nghiệm. Đây là mô hình đánh giá liên kết bạn dán.",
+  content: "Huấn luyện trên 60.000 trang từ PhiUSIIL bằng các đặc trưng HTML có thể tính lại từ trang trực tiếp. Mô hình chạy khi trang tải được.",
+  uci: "Bộ chuẩn UCI kinh điển với 30 đặc trưng được thiết kế thủ công. Một số phụ thuộc dịch vụ đã ngừng hoạt động (Alexa rank, PageRank), nên chỉ được dùng để so sánh, không dùng trực tiếp.",
 };
 
 function Leaderboard({ models, best, metric, highlight, setHighlight }: {
@@ -40,7 +40,7 @@ function Leaderboard({ models, best, metric, highlight, setHighlight }: {
             <span className="flex min-w-0 items-center gap-2 text-sm">
               <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: color }} aria-hidden="true" />
               <span className="truncate">{m.name}</span>
-              {m.name === best && <span className="shrink-0 rounded-full bg-biolume px-2 py-0.5 text-[11px] font-semibold text-abyss" title="Selected by 5-fold cross-validation F1">Deployed</span>}
+              {m.name === best && <span className="shrink-0 rounded-full bg-biolume px-2 py-0.5 text-[11px] font-semibold text-abyss" title="Được chọn bằng F1 kiểm định chéo 5-fold">Đang triển khai</span>}
             </span>
             <span className="h-2.5 rounded-full bg-reef/40">
               <motion.span className="block h-2.5 rounded-full" style={{ background: color }}
@@ -84,38 +84,38 @@ function Robustness({ fs }: { fs: FeatureSetResult }) {
   const items: { k: string; v: string; note: string }[] = [];
   if (r.split_comparison) {
     items.push({
-      k: "Random split vs. split by website",
+      k: "Chia ngẫu nhiên so với chia theo website",
       v: `${pct(r.split_comparison.random_split.f1)} vs ${pct(r.split_comparison.domain_grouped_split.f1)} F1`,
-      note: "Letting the same site appear in train and test inflates scores. We report the stricter number.",
+      note: "Để cùng website xuất hiện trong tập huấn luyện và thử nghiệm làm điểm số tăng. Chúng tôi báo số nghiêm ngặt hơn.",
     });
   }
   if (r.duplicate_leakage) {
     items.push({
-      k: "Duplicate rows leaking into test",
-      v: `${pct(r.duplicate_leakage.test_rows_also_in_train_pct, 0)} of test rows`,
-      note: `On unseen rows only, F1 is ${pct(r.duplicate_leakage.metrics_unseen_test_only.f1)}; deduplicated benchmark F1 is ${pct(r.deduplicated_benchmark.metrics.f1)}.`,
+      k: "Dòng trùng lặp rò rỉ vào tập thử nghiệm",
+      v: `${pct(r.duplicate_leakage.test_rows_also_in_train_pct, 0)} dòng thử nghiệm`,
+      note: `Chỉ trên dòng chưa từng gặp, F1 là ${pct(r.duplicate_leakage.metrics_unseen_test_only.f1)}; F1 bộ chuẩn sau khử trùng lặp là ${pct(r.deduplicated_benchmark.metrics.f1)}.`,
     });
   }
   if (r.cross_dataset) {
     const [a, b] = Object.entries(r.cross_dataset) as [string, { f1: number; roc_auc: number }][];
     items.push({
-      k: "Trained on one source, tested on the other",
-      v: `${pct(a[1].roc_auc)} and ${pct(b[1].roc_auc)} ROC-AUC`,
-      note: "URL styles differ between datasets; combining both sources is what makes the live model hold up.",
+      k: "Huấn luyện trên một nguồn, thử nghiệm trên nguồn khác",
+      v: `${pct(a[1].roc_auc)} và ${pct(b[1].roc_auc)} ROC-AUC`,
+      note: "Kiểu URL khác nhau giữa các bộ dữ liệu; kết hợp cả hai nguồn giúp mô hình trực tiếp ổn định.",
     });
   }
   if (r.ablation_without_size_features) {
     items.push({
-      k: "Without page-size features",
+      k: "Không dùng đặc trưng kích thước trang",
       v: `${pct(r.ablation_without_size_features.metrics.f1)} F1`,
-      note: "Legitimate pages in PhiUSIIL are full homepages; phishing kits are tiny. Removing size counts shows how much signal remains.",
+      note: "Trang hợp pháp trong PhiUSIIL là trang chủ đầy đủ; bộ công cụ lừa đảo thường rất nhỏ. Loại bỏ số lượng kích thước cho thấy còn lại bao nhiêu tín hiệu.",
     });
   }
   if (r.sanity_suite) {
-    items.push({ k: "Hand-picked real-world URLs", v: `${pct(r.sanity_suite.accuracy, 0)} correct`, note: "24 illustrative URLs never used for training or model selection." });
+    items.push({ k: "URL thực được chọn thủ công", v: `${pct(r.sanity_suite.accuracy, 0)} chính xác`, note: "24 URL minh họa chưa từng dùng để huấn luyện hoặc chọn mô hình." });
   }
-  items.push({ k: "Calibration (Brier score)", v: num(r.calibration?.brier, 4), note: "Lower is better; 0.25 is a coin flip." });
-  items.push({ k: "Single-URL latency", v: ms(best.latency_ms_single), note: `${best.name} on one row, after feature extraction.` });
+  items.push({ k: "Hiệu chỉnh (Brier score)", v: num(r.calibration?.brier, 4), note: "Càng thấp càng tốt; 0.25 tương đương tung đồng xu." });
+  items.push({ k: "Độ trễ cho một URL", v: ms(best.latency_ms_single), note: `${best.name} trên một dòng sau khi trích xuất đặc trưng.` });
   return (
     <dl className="grid gap-3 sm:grid-cols-2">
       {items.map((it) => (
@@ -148,14 +148,14 @@ export default function Models({ embedded = false }: { embedded?: boolean }) {
     <section id={embedded ? undefined : "models"} className={embedded ? "" : "shell py-24 md:py-32"}>
       <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
         <div>
-          <h2 className={`max-w-[18ch] font-display font-extrabold ${embedded ? "text-display-md" : "text-display-lg"}`}>Twelve models, same conditions</h2>
+          <h2 className={`max-w-[18ch] font-display font-extrabold ${embedded ? "text-display-md" : "text-display-lg"}`}>Mười hai mô hình, cùng điều kiện</h2>
           <p className="lede mt-5">
-            Logistic regression to stacked ensembles, all tuned with Optuna, cross-validated five times and tested on the same
-            held-out data. The deployed model is picked by cross-validation, never by the test set.
+            Từ hồi quy logistic đến tập hợp stacking, tất cả đều được tinh chỉnh bằng Optuna, kiểm định chéo 5 lần
+            và thử nghiệm trên cùng dữ liệu giữ lại. Mô hình triển khai được chọn bằng kiểm định chéo, không phải bằng tập thử nghiệm.
           </p>
         </div>
         {sets.length > 0 && (
-          <div role="tablist" aria-label="Feature set" className="flex flex-wrap gap-1 rounded-full border border-reef p-1">
+          <div role="tablist" aria-label="Tập đặc trưng" className="flex flex-wrap gap-1 rounded-full border border-reef p-1">
             {sets.map((k) => (
               <button key={k} role="tab" aria-selected={set === k} onClick={() => setSet(k)}
                 className={`relative rounded-full px-4 py-2 text-sm transition-colors ${set === k ? "text-abyss" : "text-mist hover:text-foam"}`}>
@@ -168,18 +168,18 @@ export default function Models({ embedded = false }: { embedded?: boolean }) {
       </div>
 
       {err && <p className="mt-10 rounded-[28px] border border-dashed border-reef p-8 text-mist">{err}</p>}
-      {!data && !err && <p className="mt-10 text-mist">Loading results</p>}
+      {!data && !err && <p className="mt-10 text-mist">Đang tải kết quả</p>}
 
       <AnimatePresence mode="wait">
         {fs && (
           <motion.div key={set} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4 }} className="mt-12 space-y-5">
-            <p className="max-w-[75ch] text-mist">{INTRO[set]} <span className="text-foam">{fs.n_train.toLocaleString()} training and {fs.n_test.toLocaleString()} test rows, {fs.features.length} features, {fs.split} split.</span></p>
+            <p className="max-w-[75ch] text-mist">{INTRO[set]} <span className="text-foam">{fs.n_train.toLocaleString()} dòng huấn luyện và {fs.n_test.toLocaleString()} dòng thử nghiệm, {fs.features.length} đặc trưng, phép chia {fs.split}.</span></p>
 
             <div className="grid gap-5 xl:grid-cols-[1.1fr_0.9fr]">
               <div className="panel p-6">
                 <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-                  <h3 className="font-display text-xl font-bold">Leaderboard</h3>
-                  <div className="flex flex-wrap gap-1" role="radiogroup" aria-label="Metric">
+                  <h3 className="font-display text-xl font-bold">Bảng xếp hạng</h3>
+                  <div className="flex flex-wrap gap-1" role="radiogroup" aria-label="Chỉ số">
                     {METRICS.map((m) => (
                       <button key={m.key} role="radio" aria-checked={metric === m.key} onClick={() => setMetric(m.key)}
                         className={`rounded-full px-3 py-1 text-xs transition-colors ${metric === m.key ? "bg-foam text-abyss" : "text-mist hover:text-foam"}`}>{m.label}</button>
@@ -190,7 +190,7 @@ export default function Models({ embedded = false }: { embedded?: boolean }) {
               </div>
               <div className="panel p-6">
                 <div className="mb-3 flex items-center justify-between">
-                  <h3 className="font-display text-xl font-bold">{curve === "roc" ? "ROC curves" : "Precision-recall"}</h3>
+                  <h3 className="font-display text-xl font-bold">{curve === "roc" ? "Đường cong ROC" : "Đường cong độ chuẩn xác - độ nhạy"}</h3>
                   <div className="flex gap-1">
                     {(["roc", "pr"] as const).map((c) => (
                       <button key={c} onClick={() => setCurve(c)} aria-pressed={curve === c}
@@ -199,20 +199,20 @@ export default function Models({ embedded = false }: { embedded?: boolean }) {
                   </div>
                 </div>
                 <Curves key={set + curve} models={fs.models} kind={curve} highlight={highlight} onHover={setHighlight} />
-                <p className="mt-2 text-xs text-mist">Hover a curve or a leaderboard row to isolate a model.</p>
+                <p className="mt-2 text-xs text-mist">Di chuột qua đường cong hoặc dòng bảng xếp hạng để cô lập mô hình.</p>
               </div>
             </div>
 
             <div className="panel overflow-x-auto p-6">
-              <h3 className="mb-4 font-display text-xl font-bold">Every metric, every model</h3>
+              <h3 className="mb-4 font-display text-xl font-bold">Mọi chỉ số, mọi mô hình</h3>
               <table className="w-full min-w-[860px] text-sm">
                 <thead className="text-left text-mist">
                   <tr className="border-b border-reef">
-                    <th className="py-2 pr-3 font-normal">Model</th>
+                    <th className="py-2 pr-3 font-normal">Mô hình</th>
                     <th className="px-3 font-normal">CV F1 (5-fold)</th>
                     {METRICS.map((m) => <th key={m.key} className="px-3 font-normal">{m.label}</th>)}
-                    <th className="px-3 font-normal">Train time</th>
-                    <th className="px-3 font-normal">Inference / 1k</th>
+                    <th className="px-3 font-normal">Thời gian huấn luyện</th>
+                    <th className="px-3 font-normal">Suy luận / 1k</th>
                   </tr>
                 </thead>
                 <tbody className="data">
@@ -231,13 +231,13 @@ export default function Models({ embedded = false }: { embedded?: boolean }) {
 
             <div className="grid gap-5 xl:grid-cols-2">
               <div className="panel p-6">
-                <h3 className="font-display text-xl font-bold">Confusion matrices</h3>
-                <p className="mb-4 mt-1 text-sm text-mist">Rows are the true class (legitimate, phishing); columns are the prediction.</p>
+                <h3 className="font-display text-xl font-bold">Ma trận nhầm lẫn</h3>
+                <p className="mb-4 mt-1 text-sm text-mist">Hàng là lớp thật (hợp pháp, lừa đảo); cột là dự đoán.</p>
                 <Confusions models={fs.models} highlight={highlight} />
               </div>
               <div className="panel p-6">
-                <h3 className="font-display text-xl font-bold">Robustness and leakage checks</h3>
-                <p className="mb-4 mt-1 text-sm text-mist">For the deployed model, {fs.best}.</p>
+                <h3 className="font-display text-xl font-bold">Kiểm tra độ bền và rò rỉ dữ liệu</h3>
+                <p className="mb-4 mt-1 text-sm text-mist">Dành cho mô hình đang triển khai, {fs.best}.</p>
                 <Robustness fs={fs} />
               </div>
             </div>

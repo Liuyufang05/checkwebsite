@@ -3,7 +3,7 @@ import type { Mood } from "../../lib/scan";
 
 /**
  * "Lumen" - an original shield-shaped lanternfish detective.
- * The lantern on its antenna changes colour with the scan result.
+ * Đèn trên ăng-ten đổi màu theo kết quả quét.
  */
 const LANTERN: Record<Mood, string> = {
   idle: "rgb(var(--biolume))",

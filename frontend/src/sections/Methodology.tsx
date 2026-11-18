@@ -7,32 +7,32 @@ type Card = { kind: "stat" | "text" | "image"; title: string; body: string; stat
 
 const CARDS: Card[] = [
   {
-    kind: "image", title: "Three public collections", img: IMG("photo-1760039894970-eb66a3633c5a"), credit: "Photo: Digital Reach / Unsplash",
-    body: "Two come from university researchers and one from GitHub. They're downloaded automatically and checked, so nothing was quietly changed.",
+    kind: "image", title: "Ba bộ dữ liệu công khai", img: IMG("photo-1760039894970-eb66a3633c5a"), credit: "Ảnh: Digital Reach / Unsplash",
+    body: "Hai bộ đến từ nhà nghiên cứu đại học và một bộ từ GitHub. Chúng được tải tự động và kiểm tra để tránh thay đổi ngầm.",
   },
   {
-    kind: "stat", stat: "100%", title: "of the 'real' links in one collection were plain homepages",
-    body: "So a lazy model could learn 'any link with a page after the slash is fake'. We tidied every link the same way and added real links that go deeper, so it can't take that shortcut.",
+    kind: "stat", stat: "100%", title: "liên kết 'thật' trong một bộ dữ liệu là trang chủ thuần túy",
+    body: "Mô hình lười có thể học rằng 'mọi liên kết có trang sau dấu gạch chéo đều là giả'. Chúng tôi chuẩn hóa mọi liên kết giống nhau và bổ sung liên kết thật sâu hơn, nên mô hình không thể dùng lối tắt đó.",
   },
   {
-    kind: "stat", stat: "1", title: "column gave the answer away",
-    body: "One column in a dataset almost told the model the answer outright. A link you paste doesn't come with that column, so we threw it out and used only clues we can read from a real page.",
+    kind: "stat", stat: "1", title: "cột dữ liệu đã tiết lộ đáp án",
+    body: "Một cột trong bộ dữ liệu gần như nói thẳng đáp án cho mô hình. Liên kết bạn dán không có cột này, nên chúng tôi bỏ cột đó và chỉ dùng dấu hiệu đọc được từ trang thực.",
   },
   {
-    kind: "image", title: "No peeking at the exam", img: IMG("photo-1714880003292-17685b9999b6"), credit: "Photo: Kaptured by Kasia / Unsplash",
-    body: "If a model practises on one page of a website and is tested on another page of the same site, that's like seeing the exam early. Every website sits on one side only. The score dropped from 87.9 to 85.5: the honest number.",
+    kind: "image", title: "Không nhìn trộm đề thi", img: IMG("photo-1714880003292-17685b9999b6"), credit: "Ảnh: Kaptured by Kasia / Unsplash",
+    body: "Nếu mô hình luyện trên một trang của website rồi được thử trên trang khác cùng website, giống như xem trước đề thi. Mỗi website chỉ thuộc một phía. Điểm giảm từ 87,9 xuống 85,5: đó là con số trung thực.",
   },
   {
-    kind: "text", title: "Same rules for everyone",
-    body: "Every model got the same practice examples, the same amount of fine-tuning and the same final exam. We timed how long each one took to learn and to answer.",
+    kind: "text", title: "Cùng quy tắc cho mọi mô hình",
+    body: "Mọi mô hình đều nhận cùng ví dụ luyện tập, cùng mức tinh chỉnh và cùng bài thi cuối. Chúng tôi đo thời gian mỗi mô hình học và trả lời.",
   },
   {
-    kind: "image", title: "One rulebook, used twice", img: IMG("photo-1750944881571-458e33204353"), credit: "Photo: Anne Nyg\u00e5rd / Unsplash",
-    body: "The exact same code reads the clues while the model learns and when you paste a link, so it always sees things the way it was taught.",
+    kind: "image", title: "Một quy tắc, dùng hai lần", img: IMG("photo-1750944881571-458e33204353"), credit: "Ảnh: Anne Nyg\u00e5rd / Unsplash",
+    body: "Cùng một đoạn mã đọc dấu hiệu khi mô hình học và khi bạn dán liên kết, nên luôn xem dữ liệu theo cách đã được dạy.",
   },
   {
-    kind: "text", title: "What it can't promise",
-    body: "Brand-new scams, hacked real websites and pages that hide from scanners can still slip through. Treat the answer as strong advice, not a guarantee.",
+    kind: "text", title: "Những điều nó không thể đảm bảo",
+    body: "Lừa đảo mới ra mắt, website thật bị tấn công và trang che giấu khỏi bộ quét vẫn có thể lọt qua. Hãy xem kết quả là lời khuyên mạnh, không phải bảo đảm tuyệt đối.",
   },
 ];
 
@@ -60,9 +60,9 @@ export default function Methodology() {
     <section id="method" ref={root} className="relative z-10 overflow-hidden bg-abyss py-24 md:py-0">
       <div className="flex min-h-[100svh] flex-col justify-center">
         <div className="shell">
-          <p className="font-display text-lg font-bold text-biolume">Chapter 5</p>
-          <h2 className="mt-2 max-w-[20ch] font-display text-display-lg font-extrabold">How we kept the score honest</h2>
-          <p className="lede mt-5 text-xl">Many phishing projects online report near-perfect scores because their data has hidden shortcuts. Here are the ones we found, and what we did about them.</p>
+          <p className="font-display text-lg font-bold text-biolume">Chương 5</p>
+          <h2 className="mt-2 max-w-[20ch] font-display text-display-lg font-extrabold">Cách chúng tôi giữ điểm số trung thực</h2>
+          <p className="lede mt-5 text-xl">Nhiều dự án chống lừa đảo trực tuyến báo điểm gần như hoàn hảo vì dữ liệu có lối tắt tiềm ẩn. Đây là những lối tắt chúng tôi tìm thấy và cách xử lý.</p>
         </div>
         <div ref={track} className="mt-12 flex gap-5 overflow-x-auto px-5 pb-6 sm:px-8 md:overflow-visible lg:px-12" style={{ scrollbarWidth: "none" }}>
           {CARDS.map((c) => (

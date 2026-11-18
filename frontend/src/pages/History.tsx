@@ -12,13 +12,13 @@ export default function History() {
 
   return (
     <main className="shell min-h-[100svh] pb-32 pt-16">
-      <Link to="/" className="text-sm text-mist hover:text-biolume">Back to the scanner</Link>
-      <h1 className="mt-6 font-display text-display-lg font-extrabold">Recent scans</h1>
-      <p className="lede mt-4">The last scans this server ran, newest first. Open one to see the full evidence again.</p>
+      <Link to="/" className="text-sm text-mist hover:text-biolume">Quay lại bộ quét</Link>
+      <h1 className="mt-6 font-display text-display-lg font-extrabold">Lần quét gần đây</h1>
+      <p className="lede mt-4">Các lần quét gần nhất do máy chủ thực hiện, mới nhất trước. Mở một mục để xem lại đầy đủ bằng chứng.</p>
       {err && <p className="mt-10 rounded-[28px] border border-lure/50 p-8">{err}</p>}
       {items && items.length === 0 && (
         <p className="mt-10 rounded-[28px] border border-dashed border-reef p-10 text-mist">
-          No scans yet. <Link to="/" className="text-biolume underline underline-offset-4">Scan your first link</Link>.
+          Chưa có lần quét nào. <Link to="/" className="text-biolume underline underline-offset-4">Quét liên kết đầu tiên</Link>.
         </p>
       )}
       {items && items.length > 0 && (
@@ -32,7 +32,7 @@ export default function History() {
                   <span className="data min-w-0 truncate text-sm">{it.url}</span>
                   <span className="data text-right text-sm">{it.risk_score}/100</span>
                   <span className="hidden text-right text-sm text-mist md:block">{new Date(it.created_utc).toLocaleString()}</span>
-                  <span className="sr-only">URL model {pct(it.p_url)}</span>
+                  <span className="sr-only">Mô hình URL {pct(it.p_url)}</span>
                 </Link>
               </motion.li>
             );

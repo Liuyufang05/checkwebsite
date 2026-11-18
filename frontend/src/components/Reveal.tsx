@@ -1,7 +1,7 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
-const LINES = ["Casting the line", "Something's biting", "Reeling it in"];
+const LINES = ["Đang thả câu", "Có gì đó đang cắn câu", "Đang kéo lên"];
 
 /** A bobber dipping on the water: ripples spread, bubbles rise, the caption tells the little fishing story. */
 export function BobberLoader({ size = "md", duration }: { size?: "sm" | "md"; duration: number }) {
@@ -66,7 +66,7 @@ export function BobberLoader({ size = "md", duration }: { size?: "sm" | "md"; du
         </AnimatePresence>
         <motion.span className="inline-block text-biolume" animate={{ opacity: [0.2, 1, 0.2] }} transition={{ duration: 0.9, repeat: Infinity }}>…</motion.span>
       </span>
-      <span className="sr-only">Loading details</span>
+      <span className="sr-only">Đang tải chi tiết</span>
     </div>
   );
 }

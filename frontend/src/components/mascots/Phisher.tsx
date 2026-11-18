@@ -23,7 +23,7 @@ export default function Phisher({ mood, className = "" }: { mood: Mood; classNam
       viewBox="0 0 240 250"
       className={className}
       role="img"
-      aria-label={`The Angler villain looks ${busted ? "caught" : foiled ? "foiled" : "sneaky"}`}
+      aria-label={`Nhân vật Lừa gạt trông ${busted ? "bị phát hiện" : foiled ? "đã thất bại" : "rất xảo quyệt"}`}
       animate={
         reduce ? undefined : busted ? { x: [0, -5, 5, -5, 0], transition: { duration: 0.4, repeat: 3 } } : { rotate: [-1.5, 1.5, -1.5], transition: { duration: 6, repeat: Infinity } }
       }
@@ -82,7 +82,7 @@ export default function Phisher({ mood, className = "" }: { mood: Mood; classNam
       {busted && (
         <motion.g initial={{ scale: 0, rotate: -20 }} animate={{ scale: 1, rotate: -8 }} style={{ transformOrigin: "60px 200px" }}>
           <rect x="18" y="186" width="96" height="30" rx="8" fill="rgb(var(--lure))" />
-          <text x="66" y="207" textAnchor="middle" fontSize="16" fontWeight="800" fill="rgb(var(--abyss))" fontFamily="Bricolage Grotesque Variable, sans-serif">Caught</text>
+          <text x="66" y="207" textAnchor="middle" fontSize="16" fontWeight="800" fill="rgb(var(--abyss))" fontFamily="Bricolage Grotesque Variable, sans-serif">Bị bắt</text>
         </motion.g>
       )}
     </motion.svg>

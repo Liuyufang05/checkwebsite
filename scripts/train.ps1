@@ -10,6 +10,7 @@ $ErrorActionPreference = "Stop"
 $Root = Split-Path $PSScriptRoot -Parent
 Set-Location $Root
 $py = Join-Path $Root ".venv\Scripts\python.exe"
+if (-not (Test-Path $py)) { $py = Join-Path $Root ".venv312\Scripts\python.exe" }
 if (-not (Test-Path $py)) { throw "Run scripts\setup.ps1 first." }
 if ($Fast) { $env:PG_FAST = "1" } else { Remove-Item Env:PG_FAST -ErrorAction SilentlyContinue }
 $env:MPLBACKEND = "Agg"

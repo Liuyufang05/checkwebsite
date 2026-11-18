@@ -77,7 +77,7 @@ export default function App() {
   return (
     <SmoothScroll>
       <ScanProvider>
-        <a href="#scan-url" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-full focus:bg-biolume focus:px-4 focus:py-2 focus:text-abyss">Skip to the scanner</a>
+        <a href="#scan-url" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-full focus:bg-biolume focus:px-4 focus:py-2 focus:text-abyss">Chuyển đến bộ quét</a>
         <div className="grain">
           <Intro />
           <Cursor />

@@ -4,6 +4,7 @@
 $ErrorActionPreference = "Stop"
 $Root = Split-Path $PSScriptRoot -Parent
 $py = Join-Path $Root ".venv\Scripts\python.exe"
+if (-not (Test-Path $py)) { $py = Join-Path $Root ".venv312\Scripts\python.exe" }
 if (-not (Test-Path $py)) { throw "Run scripts\setup.ps1 first." }
 Start-Process powershell -ArgumentList "-NoExit", "-Command", "Set-Location '$Root\backend'; & '$py' -m uvicorn app.main:app --reload --port 8000"
 Start-Process powershell -ArgumentList "-NoExit", "-Command", "Set-Location '$Root\frontend'; npm run dev"

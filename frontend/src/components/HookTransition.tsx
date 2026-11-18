@@ -11,12 +11,12 @@ export const REEL_EASE: [number, number, number, number] = [0.65, 0, 0.35, 1];
 const at = (s: number) => s / HOOK_TOTAL;
 
 const TITLES: [RegExp, string][] = [
-  [/^\/$/, "The scanner"],
-  [/^\/research/, "Inside the models"],
-  [/^\/history/, "Recent scans"],
-  [/^\/scan\//, "Scan report"],
+  [/^\/$/, "Bộ quét"],
+  [/^\/research/, "Bên trong mô hình"],
+  [/^\/history/, "Lần quét gần đây"],
+  [/^\/scan\//, "Báo cáo quét"],
 ];
-const titleFor = (path: string) => TITLES.find(([re]) => re.test(path))?.[1] ?? "Lost at sea";
+const titleFor = (path: string) => TITLES.find(([re]) => re.test(path))?.[1] ?? "Lạc ngoài biển";
 
 /** Original fish illustration with a luggage tag naming the destination page. */
 function Fish({ label }: { label: string }) {

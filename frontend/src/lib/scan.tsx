@@ -43,7 +43,7 @@ export function ScanProvider({ children }: { children: ReactNode }) {
       setStatus("done");
     } catch (e) {
       if (ctrl.signal.aborted) return;
-      setError(e instanceof ApiError ? e.message : "The scan failed unexpectedly. Try again.");
+      setError(e instanceof ApiError ? e.message : "Lần quét thất bại bất ngờ. Hãy thử lại.");
       setStatus("error");
     }
   }, []);

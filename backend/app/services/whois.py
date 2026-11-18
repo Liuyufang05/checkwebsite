@@ -82,7 +82,7 @@ def _whois_sync(domain: str) -> dict | None:
 
 async def domain_age(domain: str, timeout: float = 6.0, transport=None) -> dict:
     if not domain or "." not in domain:
-        return {"available": False, "domain": domain, "error": "No registrable domain (IP address or local name)."}
+        return {"available": False, "domain": domain, "error": "Không có tên miền có thể đăng ký (địa chỉ IP hoặc tên nội bộ)."}
     try:
         r = await asyncio.wait_for(rdap_lookup(domain, timeout, transport), timeout + 1)
         if r and r["available"]:
@@ -90,11 +90,11 @@ async def domain_age(domain: str, timeout: float = 6.0, transport=None) -> dict:
     except Exception:  # noqa: BLE001 - fall back to WHOIS
         pass
     if transport is not None:  # tests: no real WHOIS
-        return {"available": False, "domain": domain, "error": "RDAP returned no registration date."}
+        return {"available": False, "domain": domain, "error": "RDAP không trả về ngày đăng ký."}
     try:
         r = await asyncio.wait_for(asyncio.to_thread(_whois_sync, domain), timeout)
         if r:
             return r
     except Exception as exc:  # noqa: BLE001
-        return {"available": False, "domain": domain, "error": f"WHOIS lookup failed: {type(exc).__name__}"}
-    return {"available": False, "domain": domain, "error": "No registration date found."}
+        return {"available": False, "domain": domain, "error": f"Tra cứu WHOIS thất bại: {type(exc).__name__}"}
+    return {"available": False, "domain": domain, "error": "Không tìm thấy ngày đăng ký."}

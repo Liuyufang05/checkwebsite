@@ -32,8 +32,8 @@ export default function Gauge({ value, verdict, thresholds }: { value: number; v
       </g>
       <circle cx={CX} cy={CY} r="9" fill="rgb(var(--foam))" />
       <text x={CX} y={CY - 40} textAnchor="middle" className="font-display" fontSize="44" fontWeight="800" fill="rgb(var(--foam))">{shown}</text>
-      <text x="30" y="175" fontSize="11" fill="rgb(var(--mist))">Safe</text>
-      <text x="270" y="175" textAnchor="end" fontSize="11" fill="rgb(var(--mist))">Phishing</text>
+      <text x="30" y="175" fontSize="11" fill="rgb(var(--mist))">An toàn</text>
+      <text x="270" y="175" textAnchor="end" fontSize="11" fill="rgb(var(--mist))">Lừa đảo</text>
     </svg>
   );
 }

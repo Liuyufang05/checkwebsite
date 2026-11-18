@@ -7,13 +7,13 @@ import ResultView from "../components/scanner/ResultView";
 import ScanBar from "../components/ScanBar";
 
 const STEPS = [
-  { key: "guard", label: "Making sure the link is safe to open", at: 0.2 },
-  { key: "fetch", label: "Opening the page in a sealed browser", at: 1.5 },
-  { key: "tls", label: "Checking the security padlock", at: 3 },
-  { key: "whois", label: "Finding out how old the website is", at: 4.5 },
-  { key: "intel", label: "Asking Google Safe Browsing, VirusTotal and urlscan.io", at: 6 },
-  { key: "screenshot", label: "Taking a picture of the page", at: 8 },
-  { key: "models", label: "Asking our trained models", at: Infinity },
+  { key: "guard", label: "Đảm bảo liên kết an toàn để mở", at: 0.2 },
+  { key: "fetch", label: "Mở trang trong trình duyệt cô lập", at: 1.5 },
+  { key: "tls", label: "Kiểm tra ổ khóa bảo mật", at: 3 },
+  { key: "whois", label: "Kiểm tra tuổi của website", at: 4.5 },
+  { key: "intel", label: "Tra Google Safe Browsing, VirusTotal và urlscan.io", at: 6 },
+  { key: "screenshot", label: "Chụp ảnh trang", at: 8 },
+  { key: "models", label: "Hỏi các mô hình đã huấn luyện", at: Infinity },
 ];
 
 function stepTime(key: string, t: Record<string, number>) {
@@ -39,9 +39,9 @@ export default function Scanner() {
     <section id="scanner" className="shell scroll-mt-8 py-24 md:py-32" aria-live="polite">
       <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
         <div>
-          <h2 className="font-display text-display-lg font-extrabold">Live scanner</h2>
+          <h2 className="font-display text-display-lg font-extrabold">Bộ quét trực tiếp</h2>
           <p className="lede mt-5">
-            Watch each check happen as it runs. When it's done, you'll get a clear answer and the reasons behind it.
+            Theo dõi từng bước kiểm tra. Khi hoàn tất, bạn sẽ nhận kết luận rõ ràng cùng các lý do.
           </p>
           <div className="mt-8 lg:hidden"><ScanBar compact /></div>
         </div>
@@ -75,21 +75,21 @@ export default function Scanner() {
           {status === "idle" && (
             <motion.p key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               className="rounded-[28px] border border-dashed border-reef p-10 text-center text-mist">
-              Paste a link above to start a scan. Results appear here.
+              Dán liên kết ở trên để bắt đầu quét. Kết quả sẽ hiển thị tại đây.
             </motion.p>
           )}
           {status === "scanning" && (
             <motion.div key="scanning" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               className="rounded-[28px] border border-reef p-10 text-center">
               <p className="data break-all text-mist">{url}</p>
-              <p className="mt-2 font-display text-2xl font-bold">Scanning, {elapsed.toFixed(1)} s</p>
-              <p className="mt-1 text-sm text-mist">Most scans finish in 5 to 20 seconds, depending on how quickly the site and the intel services respond.</p>
+              <p className="mt-2 font-display text-2xl font-bold">Đang quét: {elapsed.toFixed(1)} giây</p>
+              <p className="mt-1 text-sm text-mist">Hầu hết lần quét mất từ 5 đến 20 giây, tùy tốc độ phản hồi của website và các dịch vụ tình báo.</p>
             </motion.div>
           )}
           {status === "error" && (
             <motion.div key="error" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               className="rounded-[28px] border border-lure/60 p-8" role="alert">
-              <p className="font-display text-2xl font-bold text-lure">Scan stopped</p>
+              <p className="font-display text-2xl font-bold text-lure">Quét đã dừng</p>
               <p className="mt-2">{error}</p>
             </motion.div>
           )}

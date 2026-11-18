@@ -17,7 +17,7 @@ export default function Curves({ models, kind, highlight, onHover }: {
   };
   const ticks = [0, 0.25, 0.5, 0.75, 1];
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={`${kind === "roc" ? "ROC" : "Precision-recall"} curves for ${models.length} models`}>
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={`${kind === "roc" ? "ROC" : "Độ chuẩn xác - độ nhạy"} cho ${models.length} mô hình`}>
       {ticks.map((t) => (
         <g key={t}>
           <line x1={sx(0)} x2={sx(1)} y1={sy(t)} y2={sy(t)} stroke="rgb(var(--reef))" strokeDasharray="2 4" />
@@ -25,8 +25,8 @@ export default function Curves({ models, kind, highlight, onHover }: {
           <text x={sx(t)} y={H - P + 16} textAnchor="middle" fontSize="10" fill="rgb(var(--mist))">{t}</text>
         </g>
       ))}
-      <text x={(W + P) / 2} y={H - 4} textAnchor="middle" fontSize="11" fill="rgb(var(--mist))">{kind === "roc" ? "False positive rate" : "Recall"}</text>
-      <text x={P + 6} y={22} fontSize="11" fill="rgb(var(--mist))">{kind === "roc" ? "True positive rate" : "Precision"}</text>
+      <text x={(W + P) / 2} y={H - 4} textAnchor="middle" fontSize="11" fill="rgb(var(--mist))">{kind === "roc" ? "Tỷ lệ dương tính giả" : "Độ nhạy"}</text>
+      <text x={P + 6} y={22} fontSize="11" fill="rgb(var(--mist))">{kind === "roc" ? "Tỷ lệ dương tính thật" : "Độ chuẩn xác"}</text>
       {kind === "roc" && <line x1={sx(0)} y1={sy(0)} x2={sx(1)} y2={sy(1)} stroke="rgb(var(--mist) / 0.4)" strokeDasharray="4 4" />}
       {models.map((m, i) => {
         const on = highlight === null || highlight === m.name;

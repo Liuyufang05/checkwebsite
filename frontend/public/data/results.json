@@ -2,9 +2,9 @@
  "feature_sets": {
   "uci": {
    "key": "uci",
-   "title": "UCI Phishing Websites - 30 engineered ternary features",
-   "role": "comparison",
-   "note": "Several features (web_traffic, Page_Rank, Google_Index, Links_pointing_to_page, Statistical_report) depend on discontinued services (Alexa, PageRank) and cannot be recomputed live, so this model is for benchmark comparison only.",
+   "title": "UCI Phishing Websites - 30 đặc trưng tam phân được thiết kế",
+   "role": "so sánh",
+   "note": "Một số đặc trưng (web_traffic, Page_Rank, Google_Index, Links_pointing_to_page, Statistical_report) phụ thuộc dịch vụ đã ngừng hoạt động (Alexa, PageRank) nên không thể tính trực tiếp; mô hình này chỉ dùng để so sánh bộ chuẩn.",
    "live": false,
    "features": [
     "having_IP_Address",
@@ -41,7 +41,7 @@
    "n_rows": 11055,
    "n_train": 8844,
    "n_test": 2211,
-   "split": "stratified random",
+   "split": "ngẫu nhiên có phân tầng",
    "phishing_rate": 0.44306,
    "models": [
     {
@@ -11862,9 +11862,9 @@
   },
   "url": {
    "key": "url",
-   "title": "Live URL lexical - 44 features recomputed from PhiUSIIL + URL-paths URLs",
-   "role": "live",
-   "note": "Computed by backend/app/features/url_features.py from canonicalised URLs; split by registered domain so no site appears in both train and test.",
+   "title": "Cú pháp URL trực tiếp - 44 đặc trưng tính lại từ URL PhiUSIIL + URL-paths",
+   "role": "trực tiếp",
+   "note": "Được tính bởi backend/app/features/url_features.py từ URL đã chuẩn hóa; chia theo tên miền đăng ký để website không xuất hiện đồng thời trong tập huấn luyện và thử nghiệm.",
    "live": true,
    "features": [
     "url_length",
@@ -11915,7 +11915,7 @@
    "n_rows": 80000,
    "n_train": 62063,
    "n_test": 17937,
-   "split": "stratified group (registered domain)",
+   "split": "nhóm phân tầng (tên miền đăng ký)",
    "phishing_rate": 0.5,
    "models": [
     {
@@ -23964,7 +23964,7 @@
      }
     },
     "sanity_suite": {
-     "note": "Hand-picked illustrative URLs (not used for training or selection).",
+     "note": "URL minh họa được chọn thủ công (không dùng để huấn luyện hoặc lựa chọn).",
      "accuracy": 0.95833,
      "items": [
       {
@@ -24093,9 +24093,9 @@
   },
   "content": {
    "key": "content",
-   "title": "Live HTML content - 24 PhiUSIIL HTML features reproducible from a fetched page",
-   "role": "live",
-   "note": "Same column definitions as PhiUSIIL, recomputed live by backend/app/features/html_features.py.",
+   "title": "Nội dung HTML trực tiếp - 24 đặc trưng HTML PhiUSIIL có thể tái tạo từ trang đã tải",
+   "role": "trực tiếp",
+   "note": "Cùng định nghĩa cột như PhiUSIIL, tính lại trực tiếp bởi backend/app/features/html_features.py.",
    "live": true,
    "features": [
     "LineOfCode",
@@ -24126,7 +24126,7 @@
    "n_rows": 60000,
    "n_train": 48232,
    "n_test": 11768,
-   "split": "stratified group (registered domain)",
+   "split": "nhóm phân tầng (tên miền đăng ký)",
    "phishing_rate": 0.5,
    "models": [
     {

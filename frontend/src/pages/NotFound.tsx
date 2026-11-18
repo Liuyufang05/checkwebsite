@@ -18,10 +18,10 @@ export default function NotFound() {
       <div className="relative z-10 max-w-xl text-center">
         <motion.p initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mt-24 font-display text-[clamp(7rem,24vw,15rem)] font-extrabold leading-none tracking-tighter text-outline">404</motion.p>
-        <h1 className="mt-2 font-display text-display-md font-extrabold">Nothing on this hook</h1>
-        <p className="lede mx-auto mt-4">The page you asked for doesn't exist. If a link sent you here, it may have been mistyped, or it may be bait.</p>
+        <h1 className="mt-2 font-display text-display-md font-extrabold">Không có gì trên móc câu này</h1>
+        <p className="lede mx-auto mt-4">Trang bạn yêu cầu không tồn tại. Nếu một liên kết đưa bạn tới đây, có thể liên kết bị nhập sai hoặc là một mồi nhử.</p>
         <div className="mt-8 flex justify-center">
-          <Magnetic><Link to="/" className="btn-primary">Go to the scanner</Link></Magnetic>
+          <Magnetic><Link to="/" className="btn-primary">Đi tới bộ quét</Link></Magnetic>
         </div>
       </div>
       <Phisher mood="legitimate" className="absolute bottom-24 right-[6vw] hidden w-40 opacity-80 md:block" />

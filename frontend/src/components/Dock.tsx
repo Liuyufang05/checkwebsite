@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import { useSmoothScroll } from "../lib/motion";
 
 const SECTIONS = [
-  { id: "top", label: "Scan", icon: "M11 4a7 7 0 1 0 4.2 12.6l4.1 4.1 1.4-1.4-4.1-4.1A7 7 0 0 0 11 4zm0 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10z" },
-  { id: "how", label: "How it works", icon: "M4 6h16v2H4zm0 5h10v2H4zm0 5h16v2H4z" },
+  { id: "top", label: "Quét", icon: "M11 4a7 7 0 1 0 4.2 12.6l4.1 4.1 1.4-1.4-4.1-4.1A7 7 0 0 0 11 4zm0 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10z" },
+  { id: "how", label: "Cách hoạt động", icon: "M4 6h16v2H4zm0 5h10v2H4zm0 5h16v2H4z" },
 ];
 
 function useTheme() {
@@ -47,7 +47,7 @@ export default function Dock() {
   }, [home]);
 
   return (
-    <nav aria-label="Primary" className="fixed inset-x-0 bottom-4 z-50 flex justify-center px-3">
+    <nav aria-label="Điều hướng chính" className="fixed inset-x-0 bottom-4 z-50 flex justify-center px-3">
       <div className="flex items-center gap-1 rounded-full border border-reef/80 bg-trench/80 p-1.5 shadow-2xl shadow-black/30 backdrop-blur-xl">
         {SECTIONS.map((s) => {
           const on = home && active === s.id;
@@ -69,16 +69,16 @@ export default function Dock() {
         })}
         <button
           onClick={() => (research ? scrollTo(0) : navigate("/research"))}
-          aria-label="Inside the models" aria-current={research ? "page" : undefined}
+          aria-label="Bên trong mô hình" aria-current={research ? "page" : undefined}
           className={`relative flex h-11 items-center gap-2 rounded-full px-3.5 transition-colors ${research ? "bg-biolume text-abyss" : "text-mist hover:text-foam"}`}>
           <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="currentColor" aria-hidden="true"><path d="M4 20V10h3v10zm6.5 0V4h3v16zM17 20v-7h3v7z" /></svg>
-          <span className="hidden text-sm font-medium lg:inline">Inside the models</span>
+          <span className="hidden text-sm font-medium lg:inline">Bên trong mô hình</span>
         </button>
         <span className="mx-1 h-6 w-px bg-reef" aria-hidden="true" />
-        <Link to="/history" aria-label="Scan history" className={`flex h-11 items-center rounded-full px-3.5 transition-colors ${pathname === "/history" ? "bg-biolume text-abyss" : "text-mist hover:text-foam"}`}>
+        <Link to="/history" aria-label="Lịch sử quét" className={`flex h-11 items-center rounded-full px-3.5 transition-colors ${pathname === "/history" ? "bg-biolume text-abyss" : "text-mist hover:text-foam"}`}>
           <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="currentColor" aria-hidden="true"><path d="M13 3a9 9 0 0 0-9 9H1l4 4 4-4H6a7 7 0 1 1 2.1 5l-1.4 1.4A9 9 0 1 0 13 3zm-1 5v5l4.3 2.5.7-1.2-3.5-2.1V8z" /></svg>
         </Link>
-        <button onClick={toggle} aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`} className="flex h-11 items-center rounded-full px-3.5 text-mist transition-colors hover:text-foam">
+        <button onClick={toggle} aria-label={`Chuyển sang giao diện ${theme === "dark" ? "sáng" : "tối"}`} className="flex h-11 items-center rounded-full px-3.5 text-mist transition-colors hover:text-foam">
           <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="currentColor" aria-hidden="true">
             {theme === "dark"
               ? <path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM11 1h2v3h-2zm0 19h2v3h-2zM3.5 4.9l1.4-1.4 2.1 2.1-1.4 1.4zm13 13 1.4-1.4 2.1 2.1-1.4 1.4zM1 11h3v2H1zm19 0h3v2h-3zM3.5 19.1l2.1-2.1 1.4 1.4-2.1 2.1zm13-13 2.1-2.1 1.4 1.4-2.1 2.1z" />

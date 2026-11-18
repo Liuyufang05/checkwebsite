@@ -6,9 +6,11 @@ $ErrorActionPreference = "Stop"
 $Root = Split-Path $PSScriptRoot -Parent
 Set-Location $Root
 
-$py = if (Get-Command py -ErrorAction SilentlyContinue) { "py" } else { "python" }
-Write-Host "==> Creating virtual environment in .venv" -ForegroundColor Cyan
-if (-not (Test-Path ".venv")) { & $py -m venv .venv }
+# Pin the venv to a Python that has wheels for the pinned ML libs (3.12; 3.14 has none yet).
+$py = "py"; $pyArgs = @("-3.12")
+if (-not (py -3.12 -c "import sys" 2>$null)) { $py = "python"; $pyArgs = @() }
+Write-Host "==> Creating virtual environment in .venv ($py $($pyArgs -join ' '))" -ForegroundColor Cyan
+if (-not (Test-Path ".venv")) { & $py @pyArgs -m venv .venv }
 $venvPy = Join-Path $Root ".venv\Scripts\python.exe"
 & $venvPy -m pip install --upgrade pip
 & $venvPy -m pip install -r backend\requirements-dev.txt -r ml\requirements.txt

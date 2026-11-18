@@ -45,7 +45,7 @@ def inspect_sync(target: SafeTarget, timeout: float = 5.0) -> dict:
     try:
         der, proto, cipher = _grab(ip, target.host, port, timeout)
     except (OSError, ssl.SSLError) as exc:
-        return {"available": False, "error": f"No TLS on port {port}: {type(exc).__name__}"}
+        return {"available": False, "error": f"Không có TLS trên cổng {port}: {type(exc).__name__}"}
     verified, verify_error = _verify(ip, target.host, port, timeout)
     cert = x509.load_der_x509_certificate(der)
     now = datetime.now(timezone.utc)

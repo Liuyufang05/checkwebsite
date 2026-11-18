@@ -90,7 +90,7 @@ class Intel:
                     if s.status_code == 429:
                         return {"status": "rate_limited", "permalink": permalink}
                     return {"status": "pending", "known": False, "permalink": permalink,
-                            "message": "URL was new to VirusTotal and has been submitted; results appear in ~1 minute."}
+                            "message": "VirusTotal chưa có URL này nên đã gửi yêu cầu quét; kết quả xuất hiện sau khoảng 1 phút."}
                 if r.status_code != 200:
                     return {"status": "error", "error": f"HTTP {r.status_code}"}
             attrs = r.json().get("data", {}).get("attributes", {})

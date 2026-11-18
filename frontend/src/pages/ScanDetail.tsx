@@ -11,11 +11,11 @@ export default function ScanDetail() {
   useEffect(() => { api.scanById(id).then(setR).catch((e) => setErr(e.message)); }, [id]);
   return (
     <main className="shell min-h-[100svh] pb-32 pt-16">
-      <Link to="/history" className="text-sm text-mist hover:text-biolume">Back to recent scans</Link>
-      <h1 className="mt-6 font-display text-display-md font-extrabold">Scan report</h1>
+      <Link to="/history" className="text-sm text-mist hover:text-biolume">Quay lại lần quét gần đây</Link>
+      <h1 className="mt-6 font-display text-display-md font-extrabold">Báo cáo quét</h1>
       <div className="mt-8">
         {err && <p className="rounded-[28px] border border-lure/50 p-8">{err}</p>}
-        {!r && !err && <p className="text-mist">Loading report</p>}
+        {!r && !err && <p className="text-mist">Đang tải báo cáo</p>}
         {r && <ResultView r={r} />}
       </div>
     </main>

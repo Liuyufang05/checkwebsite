@@ -93,7 +93,7 @@ class Scanner:
             return task.result()
 
         tls = res(tls_t, {"available": False, "error": "Plain HTTP (no TLS)." if target.scheme == "http" else "TLS check timed out."})
-        whois = res(whois_t, {"available": False, "domain": reg, "error": "Domain-age lookup timed out."})
+        whois = res(whois_t, {"available": False, "domain": reg, "error": "Tra cứu tuổi tên miền hết thời gian."})
         gsb = res(gsb_t, {"status": "error", "error": "timeout"})
         vt = res(vt_t, {"status": "error", "error": "timeout"})
         us = res(us_t, {"status": "error", "error": "timeout"})
